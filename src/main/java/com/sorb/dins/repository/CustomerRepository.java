@@ -1,6 +1,6 @@
-package com.example.dins.repository;
+package com.sorb.dins.repository;
 
-import com.example.dins.model.Customer;
+import com.sorb.dins.model.Customer;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

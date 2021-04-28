@@ -1,7 +1,7 @@
-package com.example.dins.controller;
+package com.sorb.dins.controller;
 
-import com.example.dins.model.Customer;
-import com.example.dins.service.CustomerService;
+import com.sorb.dins.model.Customer;
+import com.sorb.dins.service.CustomerService;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 

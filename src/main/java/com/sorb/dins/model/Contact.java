@@ -1,12 +1,11 @@
-package com.example.dins.model;
+package com.sorb.dins.model;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
 import javax.persistence.*;
-import java.util.Set;
 
 @Entity
 @Table
@@ -14,10 +13,10 @@ import java.util.Set;
 @Setter
 @ToString
 //@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
-public class Customer {
+public class Contact {
 
-    @Id
     @GeneratedValue
+    @Id
     private long id;
 
     @Column
@@ -26,8 +25,12 @@ public class Customer {
     @Column
     private String lastName;
 
-    @OneToMany(mappedBy = "customer")
-    @JsonManagedReference
-    private Set<Contact> contacts;
+    @Column
+    private long phoneNumber;
+
+    @ManyToOne
+    @JoinColumn(name = "customer_id", nullable = false)
+    @JsonBackReference
+    private Customer customer;
 
 }

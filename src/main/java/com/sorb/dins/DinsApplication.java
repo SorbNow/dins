@@ -1,4 +1,4 @@
-package com.example.dins;
+package com.sorb.dins;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

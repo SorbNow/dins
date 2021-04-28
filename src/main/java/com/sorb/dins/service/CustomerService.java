@@ -1,6 +1,6 @@
-package com.example.dins.service;
+package com.sorb.dins.service;
 
-import com.example.dins.model.Customer;
+import com.sorb.dins.model.Customer;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

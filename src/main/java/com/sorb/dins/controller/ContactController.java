@@ -1,7 +1,7 @@
-package com.example.dins.controller;
+package com.sorb.dins.controller;
 
-import com.example.dins.model.Contact;
-import com.example.dins.service.ContactService;
+import com.sorb.dins.model.Contact;
+import com.sorb.dins.service.ContactService;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
