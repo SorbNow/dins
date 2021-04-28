@@ -19,15 +19,10 @@ public class CustomerController {
 
 
     @GetMapping
-    public List<Customer> getAllCustomers(@RequestParam(required = false) String name,
+    public List<Customer> getCustomers(@RequestParam(required = false) String name,
                                           @RequestParam(defaultValue = "false", required = false) boolean isRequiresLike) {
-        return name==null ? customerService.getAll() : customerService.findCustomerByName(name, isRequiresLike);
+        return name == null ? customerService.getAll() : customerService.findCustomerByName(name, isRequiresLike);
     }
-
-//    @GetMapping
-//    public List<Customer> getCustomersByName(@RequestParam String name, @RequestParam(defaultValue = "false") boolean isRequiresLike) {
-//        return customerService.findCustomerByName(name,isRequiresLike);
-//    }
 
     @PostMapping
     public Customer saveCustomer(@RequestBody Customer customer) {

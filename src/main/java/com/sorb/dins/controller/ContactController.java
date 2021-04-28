@@ -19,24 +19,23 @@ public class ContactController {
     @GetMapping
     public List<Contact> getContactsByCustomerId(@RequestParam long customerId,
                                                  @RequestParam(required = false, defaultValue = "0") long phoneNumber) {
-        return phoneNumber==0? contactService.getByCustomerId(customerId):contactService.findContactByPhoneNumber(phoneNumber,customerId);
+        return phoneNumber == 0 ? contactService.getByCustomerId(customerId) : contactService.findContactByPhoneNumber(phoneNumber, customerId);
     }
-
-//    @GetMapping
-//    public List<Contact> getContactsByPhoneNumber(@RequestParam(required = false) long phoneNumber, @RequestParam(defaultValue = "false", required = false) boolean isRequiresLike) {
-//        return contactService.findContactByPhoneNumber(phoneNumber, isRequiresLike);
-//    }
 
     /*
     JSON:
     {
-    "firstName" : "nanrny",
-    "lastName" : "dady",
+    "id":6
+    "firstName" : "Alice",
+    "lastName" : "Madness",
     "phoneNumber":13772,
     "customer" : {"id":1}
-
-
 }*/
+    @GetMapping("/{id}")
+    public Contact getContactById(@PathVariable long id) {
+        return contactService.getById(id);
+    }
+
 
     @PostMapping
     public Contact saveContact(@RequestBody Contact newContact) {

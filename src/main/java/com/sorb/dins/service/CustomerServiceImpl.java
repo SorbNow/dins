@@ -45,7 +45,7 @@ public class CustomerServiceImpl implements CustomerService {
             oldCustomer.setFirstName(newCustomer.getFirstName());
 
         if (isRequiresUpdate(oldCustomer.getLastName(), newCustomer.getLastName()))
-            oldCustomer.setFirstName(newCustomer.getFirstName());
+            oldCustomer.setLastName(newCustomer.getLastName());
 
         return save(oldCustomer);
     }
@@ -53,7 +53,7 @@ public class CustomerServiceImpl implements CustomerService {
     @Override
     public List<Customer> findCustomerByName(String name, boolean isRequiresLike) {
         return isRequiresLike ? customerRepository.findCustomersByLastNameIgnoreCaseContainsOrFirstNameIgnoreCaseContains(name, name)
-                : customerRepository.findCustomersByLastNameOrFirstName(name, name);
+                : customerRepository.findCustomersByLastNameIgnoreCaseOrFirstNameIgnoreCase(name, name);
     }
 
     private boolean isRequiresUpdate(String oldString, String newString) {

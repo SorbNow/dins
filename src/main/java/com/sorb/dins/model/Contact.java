@@ -15,8 +15,9 @@ import javax.persistence.*;
 //@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Contact {
 
-    @GeneratedValue
+
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
     @Column

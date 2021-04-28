@@ -41,7 +41,7 @@ public class ContactServiceImpl implements ContactService {
             oldContact.setFirstName(newContact.getFirstName());
 
         if (isRequiresUpdate(oldContact.getLastName(), newContact.getLastName()))
-            oldContact.setFirstName(newContact.getFirstName());
+            oldContact.setLastName(newContact.getLastName());
 
         if (oldContact.getPhoneNumber() != newContact.getPhoneNumber() && newContact.getPhoneNumber() != 0)
             oldContact.setPhoneNumber(newContact.getPhoneNumber());
