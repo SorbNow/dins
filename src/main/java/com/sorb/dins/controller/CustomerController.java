@@ -7,10 +7,18 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+/**
+ * Customer controller class
+ *
+ * @author sorb
+ */
 @RestController
 @RequestMapping("/customers")
 public class CustomerController {
 
+    /**
+     * Autowired {@link CustomerService}
+     */
     private final CustomerService customerService;
 
     public CustomerController(CustomerService customerService) {
@@ -20,7 +28,7 @@ public class CustomerController {
 
     @GetMapping
     public List<Customer> getCustomers(@RequestParam(required = false) String name,
-                                          @RequestParam(defaultValue = "false", required = false) boolean isRequiresLike) {
+                                       @RequestParam(defaultValue = "false", required = false) boolean isRequiresLike) {
         return name == null ? customerService.getAll() : customerService.findCustomerByName(name, isRequiresLike);
     }
 

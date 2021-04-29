@@ -6,10 +6,19 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+/**
+ * Contact controller class
+ *
+ * @author sorb
+ */
+
 @RestController
 @RequestMapping("/contacts")
 public class ContactController {
 
+    /**
+     * Autowired {@link ContactService}
+     */
     private final ContactService contactService;
 
     public ContactController(ContactService contactService) {
@@ -22,15 +31,6 @@ public class ContactController {
         return phoneNumber == 0 ? contactService.getByCustomerId(customerId) : contactService.findContactByPhoneNumber(phoneNumber, customerId);
     }
 
-    /*
-    JSON:
-    {
-    "id":6
-    "firstName" : "Alice",
-    "lastName" : "Madness",
-    "phoneNumber":13772,
-    "customer" : {"id":1}
-}*/
     @GetMapping("/{id}")
     public Contact getContactById(@PathVariable long id) {
         return contactService.getById(id);
