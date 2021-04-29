@@ -61,3 +61,8 @@ GET
 Можно посмотреть запросы в Swagger:
 
 http://localhost:8080/swagger.html
+
+
+start program command:
+
+java -jar dins-0.0.1-SNAPSHOT.jar
