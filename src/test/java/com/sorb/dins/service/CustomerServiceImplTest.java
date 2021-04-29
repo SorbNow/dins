@@ -51,7 +51,6 @@ class CustomerServiceImplTest {
 
     @Test
     void delete() {
-
         customerService.delete(1);
         Mockito.verify(customerRepository, times(1)).deleteById(anyLong());
     }

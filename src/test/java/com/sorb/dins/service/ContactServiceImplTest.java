@@ -60,9 +60,8 @@ class ContactServiceImplTest {
     void delete() {
         final long contactId = 1L;
         contactService.delete(contactId);
-        contactService.delete(contactId);
 
-        Mockito.verify(contactRepository, times(2)).deleteById(contactId);
+        Mockito.verify(contactRepository, times(1)).deleteById(contactId);
     }
 
     @Test
@@ -74,8 +73,6 @@ class ContactServiceImplTest {
         Mockito.verify(contactRepository, times(1)).findContactsByCustomer_Id(1L);
         assertEquals(1, contactList.size());
         assertEquals(contact.getLastName(), contactList.get(0).getLastName());
-
-
     }
 
     @Test
