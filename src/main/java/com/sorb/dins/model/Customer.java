@@ -6,6 +6,7 @@ import lombok.Setter;
 import lombok.ToString;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 import java.util.Set;
 
 /**
@@ -32,12 +33,14 @@ public class Customer {
      * First name column in customer. Casts to first_name column in DB
      */
     @Column
+    @NotBlank(message = "First name parameter must have at least 1 character")
     private String firstName;
 
     /**
      * Last name column in customer. Casts to last_name column in DB
      */
     @Column
+    @NotBlank(message = "Last name parameter must have at least 1 character")
     private String lastName;
 
     /**

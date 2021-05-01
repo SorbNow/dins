@@ -5,6 +5,9 @@ import com.sorb.dins.service.CustomerService;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Positive;
 import java.util.List;
 
 /**
@@ -14,6 +17,7 @@ import java.util.List;
  */
 @RestController
 @RequestMapping("/customers")
+@Validated
 public class CustomerController {
 
     /**
@@ -27,28 +31,28 @@ public class CustomerController {
 
 
     @GetMapping
-    public List<Customer> getCustomers(@RequestParam(required = false) String name,
+    public List<Customer> getCustomers(@NotBlank @RequestParam(required = false) String name,
                                        @RequestParam(defaultValue = "false", required = false) boolean isRequiresLike) {
         return name == null ? customerService.getAll() : customerService.findCustomerByName(name, isRequiresLike);
     }
 
     @PostMapping
-    public Customer saveCustomer(@RequestBody Customer customer) {
+    public Customer saveCustomer(@Valid @RequestBody Customer customer) {
         return customerService.save(customer);
     }
 
     @GetMapping("/{id}")
-    public Customer getCustomerById(@PathVariable long id) {
+    public Customer getCustomerById(@Positive @PathVariable long id) {
         return customerService.getById(id);
     }
 
     @PutMapping("/{id}")
-    public Customer changeCustomer(@PathVariable long id, @RequestBody @Validated Customer changedCustomer) {
+    public Customer changeCustomer(@Positive @PathVariable long id, @RequestBody Customer changedCustomer) {
         return customerService.updateCustomer(customerService.getById(id), changedCustomer);
     }
 
     @DeleteMapping("/{id}")
-    public void deleteCustomer(@PathVariable long id) {
+    public void deleteCustomer(@Positive @PathVariable long id) {
         customerService.delete(id);
     }
 

@@ -6,6 +6,9 @@ import lombok.Setter;
 import lombok.ToString;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Positive;
 
 /**
  * Contact entity class
@@ -31,17 +34,20 @@ public class Contact {
      * First name column in contact. Casts to first_name column in DB
      */
     @Column
+    @NotBlank(message = "First name parameter must have at least 1 character")
     private String firstName;
 
     /**
      * Last name column in contact. Casts to last_name column in DB
      */
     @Column
+    @NotBlank(message = "Last name parameter must have at least 1 character")
     private String lastName;
     /**
      * Phone number column in contact. Casts to phone_number column in DB
      */
     @Column
+    @Positive(message = "Phone number must be positive")
     private long phoneNumber;
 
     /**
@@ -51,6 +57,7 @@ public class Contact {
      */
     @ManyToOne
     @JoinColumn(name = "customer_id", nullable = false)
+    @NotNull(message = "Customer can't be null")
     @JsonBackReference
     private Customer customer;
 
