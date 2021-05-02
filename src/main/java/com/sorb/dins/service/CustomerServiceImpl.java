@@ -68,13 +68,13 @@ public class CustomerServiceImpl implements CustomerService {
                 : customerRepository.findCustomersByLastNameIgnoreCaseOrFirstNameIgnoreCase(name, name);
 
         if (customerList.isEmpty())
-            throw new NotFoundInDatabaseException("Customers with name: " + name + " not found in database");
+            throw new NotFoundInDatabaseException("Customers with name " + name + " not found in database");
 
         return customerList;
     }
 
     private boolean isRequiresUpdate(String oldString, String newString) {
-        return !oldString.equals(newString) && !newString.trim().isEmpty();
+        return newString!=null && !oldString.equals(newString) && !newString.trim().isEmpty();
     }
 
     private void checkCustomerIsPresentInDatabase(long id) {

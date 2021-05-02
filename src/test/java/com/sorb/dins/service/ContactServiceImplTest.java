@@ -16,6 +16,7 @@ import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.times;
 
 @SpringBootTest
@@ -58,10 +59,11 @@ class ContactServiceImplTest {
 
     @Test
     void delete() {
-        final long contactId = 1L;
-        contactService.delete(contactId);
+        Mockito.doReturn(Optional.of(getSimpleContact()))
+                .when(contactRepository).findById(any());
+        contactService.delete(contactRepository.findById(1L).get().getId());
 
-        Mockito.verify(contactRepository, times(1)).deleteById(contactId);
+        Mockito.verify(contactRepository, times(1)).deleteById(anyLong());
     }
 
     @Test
@@ -103,7 +105,6 @@ class ContactServiceImplTest {
 
         Mockito.verify(contactRepository, times(1))
                 .findContactsByPhoneNumberAndCustomer_Id(779345, 1L);
-
     }
 
     @Test
@@ -125,11 +126,9 @@ class ContactServiceImplTest {
 
         Mockito.verify(contactRepository, times(1)).findContactsByCustomer_Id(1L);
         Mockito.verify(contactRepository, times(2)).deleteById(any());
-
     }
 
     private Contact getSimpleContact() {
-
         Customer customer = new Customer();
         customer.setFirstName("Vanda");
         customer.setLastName("Smith");

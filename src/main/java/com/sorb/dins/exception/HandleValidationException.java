@@ -114,7 +114,7 @@ public class HandleValidationException extends ResponseEntityExceptionHandler {
     //custom exception if record not found in database
     @ExceptionHandler(ExistsInDatabaseException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public ResponseEntity<Object> resourceNotFoundHandler(ExistsInDatabaseException ex) {
+    public ResponseEntity<Object> resourceExistsHandler(ExistsInDatabaseException ex) {
         String error =
                 ex.getMessage();
 

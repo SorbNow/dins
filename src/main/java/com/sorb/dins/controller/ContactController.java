@@ -40,17 +40,16 @@ public class ContactController {
         return phoneNumber == 0 ? contactService.getByCustomerId(customerId) : contactService.findContactByPhoneNumber(phoneNumber, customerId);
     }
 
-    @GetMapping("/{id}")
-    public Contact getContactById(@Positive @PathVariable long id) {
-        return contactService.getById(id);
-    }
-
-
     @PostMapping
     public Contact saveContact(@Valid @RequestBody Contact newContact) {
         if (customerService.getById(newContact.getCustomer().getId()) == null)
             throw new NotFoundInDatabaseException("customer with id " + newContact.getCustomer().getId() + " not found in database");
         return contactService.save(newContact);
+    }
+
+    @GetMapping("/{id}")
+    public Contact getContactById(@Positive @PathVariable long id) {
+        return contactService.getById(id);
     }
 
     @PutMapping("/{id}")

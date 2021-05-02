@@ -51,7 +51,9 @@ class CustomerServiceImplTest {
 
     @Test
     void delete() {
-        customerService.delete(1);
+        Mockito.doReturn(Optional.of(createSimpleCustomer()))
+                .when(customerRepository).findById(any());
+        customerService.delete(customerRepository.findById(1L).get().getId());
         Mockito.verify(customerRepository, times(1)).deleteById(anyLong());
     }
 
@@ -59,8 +61,6 @@ class CustomerServiceImplTest {
     void save() {
         Mockito.doReturn(createSimpleCustomer())
                 .when(customerRepository).save(any(Customer.class));
-
-
     }
 
     @Test
@@ -138,7 +138,5 @@ class CustomerServiceImplTest {
         simpleCustomer.setContacts(contacts);
 
         return simpleCustomer;
-
     }
-
 }

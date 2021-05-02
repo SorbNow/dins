@@ -57,7 +57,7 @@ public class ContactServiceImpl implements ContactService {
         if (isRequiresUpdate(oldContact.getLastName(), newContact.getLastName()))
             oldContact.setLastName(newContact.getLastName());
 
-        if (oldContact.getPhoneNumber() != newContact.getPhoneNumber() && newContact.getPhoneNumber() != 0)
+        if (newContact.getPhoneNumber()>0 && newContact.getPhoneNumber() != 0 && oldContact.getPhoneNumber() != newContact.getPhoneNumber())
             oldContact.setPhoneNumber(newContact.getPhoneNumber());
 
         return contactRepository.save(oldContact);
@@ -76,7 +76,7 @@ public class ContactServiceImpl implements ContactService {
     }
 
     private boolean isRequiresUpdate(String oldString, String newString) {
-        return !oldString.equals(newString) && !newString.trim().isEmpty();
+        return newString!=null && !oldString.equals(newString) && !newString.trim().isEmpty();
     }
 
     public void deleteRelatedContacts(long customerId) {
