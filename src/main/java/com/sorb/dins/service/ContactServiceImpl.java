@@ -1,5 +1,7 @@
 package com.sorb.dins.service;
 
+import com.sorb.dins.exception.ExistsInDatabaseException;
+import com.sorb.dins.exception.NotFoundInDatabaseException;
 import com.sorb.dins.model.Contact;
 import com.sorb.dins.repository.ContactRepository;
 import org.springframework.stereotype.Service;
@@ -17,26 +19,38 @@ public class ContactServiceImpl implements ContactService {
 
     @Override
     public Contact save(Contact contact) {
+        if (contact.getId() != 0 && contactRepository.findById(contact.getId()).isPresent())
+            throw new ExistsInDatabaseException("Contact with id: " + contact.getId() + " already exists in database." +
+                    " For update use PUT ");
+
         return contactRepository.save(contact);
     }
 
     @Override
     public Contact getById(long id) {
-        return contactRepository.findById(id).isPresent() ? contactRepository.findById(id).get() : null;
+        checkContactIsPresentInDatabase(id);
+        return contactRepository.findById(id).get();
     }
 
     @Override
     public void delete(long id) {
+        checkContactIsPresentInDatabase(id);
         contactRepository.deleteById(id);
     }
 
     @Override
     public List<Contact> getByCustomerId(long customerId) {
-        return contactRepository.findContactsByCustomer_Id(customerId);
+        List<Contact> contactList = contactRepository.findContactsByCustomer_Id(customerId);
+
+        if (contactList.isEmpty())
+            throw new NotFoundInDatabaseException("Contacts with customer id: " + customerId + " not found in database");
+
+        return contactList;
     }
 
     @Override
     public Contact updateContact(Contact oldContact, Contact newContact) {
+
         if (isRequiresUpdate(oldContact.getFirstName(), newContact.getFirstName()))
             oldContact.setFirstName(newContact.getFirstName());
 
@@ -46,12 +60,19 @@ public class ContactServiceImpl implements ContactService {
         if (oldContact.getPhoneNumber() != newContact.getPhoneNumber() && newContact.getPhoneNumber() != 0)
             oldContact.setPhoneNumber(newContact.getPhoneNumber());
 
-        return save(oldContact);
+        return contactRepository.save(oldContact);
     }
 
     @Override
     public List<Contact> findContactByPhoneNumber(long phoneNumber, long customerId) {
-        return contactRepository.findContactsByPhoneNumberAndCustomer_Id(phoneNumber, customerId);
+
+        List<Contact> contactList = contactRepository.findContactsByPhoneNumberAndCustomer_Id(phoneNumber, customerId);
+
+        if (contactList.isEmpty())
+            throw new NotFoundInDatabaseException("Contacts with phone number: " + phoneNumber + " and customer id: "
+                    + customerId + " not found in database");
+
+        return contactList;
     }
 
     private boolean isRequiresUpdate(String oldString, String newString) {
@@ -61,5 +82,10 @@ public class ContactServiceImpl implements ContactService {
     public void deleteRelatedContacts(long customerId) {
         for (Contact c : contactRepository.findContactsByCustomer_Id(customerId))
             contactRepository.deleteById(c.getId());
+    }
+
+    private void checkContactIsPresentInDatabase(long id) {
+        if (!contactRepository.findById(id).isPresent())
+            throw new NotFoundInDatabaseException("Contact with id: " + id + " not found in database");
     }
 }

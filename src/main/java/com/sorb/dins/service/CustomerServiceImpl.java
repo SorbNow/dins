@@ -1,5 +1,7 @@
 package com.sorb.dins.service;
 
+import com.sorb.dins.exception.ExistsInDatabaseException;
+import com.sorb.dins.exception.NotFoundInDatabaseException;
 import com.sorb.dins.model.Customer;
 import com.sorb.dins.repository.CustomerRepository;
 import org.springframework.stereotype.Service;
@@ -20,22 +22,32 @@ public class CustomerServiceImpl implements CustomerService {
 
     @Override
     public List<Customer> getAll() {
-        return customerRepository.findAll();
+        List<Customer> customerList = customerRepository.findAll();
+
+        if (customerList.isEmpty())
+            throw new NotFoundInDatabaseException("Customers table is empty");
+
+        return customerList;
     }
 
     @Override
     public Customer getById(long id) {
-        return customerRepository.findById(id).isPresent() ? customerRepository.findById(id).get() : null;
+        checkCustomerIsPresentInDatabase(id);
+        return customerRepository.findById(id).get();
     }
 
     @Override
     public void delete(long id) {
+        checkCustomerIsPresentInDatabase(id);
         contactService.deleteRelatedContacts(id);
         customerRepository.deleteById(id);
     }
 
     @Override
     public Customer save(Customer customer) {
+        if (customer.getId() != 0 && customerRepository.findById(customer.getId()).isPresent())
+            throw new ExistsInDatabaseException("Customer with id: " + customer.getId() + " already exists in database." +
+                    " For update use PUT ");
         return customerRepository.save(customer);
     }
 
@@ -47,16 +59,26 @@ public class CustomerServiceImpl implements CustomerService {
         if (isRequiresUpdate(oldCustomer.getLastName(), newCustomer.getLastName()))
             oldCustomer.setLastName(newCustomer.getLastName());
 
-        return save(oldCustomer);
+        return customerRepository.save(oldCustomer);
     }
 
     @Override
     public List<Customer> findCustomerByName(String name, boolean isRequiresLike) {
-        return isRequiresLike ? customerRepository.findCustomersByLastNameIgnoreCaseContainsOrFirstNameIgnoreCaseContains(name, name)
+        List<Customer> customerList = isRequiresLike ? customerRepository.findCustomersByLastNameIgnoreCaseContainsOrFirstNameIgnoreCaseContains(name, name)
                 : customerRepository.findCustomersByLastNameIgnoreCaseOrFirstNameIgnoreCase(name, name);
+
+        if (customerList.isEmpty())
+            throw new NotFoundInDatabaseException("Customers with name: " + name + " not found in database");
+
+        return customerList;
     }
 
     private boolean isRequiresUpdate(String oldString, String newString) {
         return !oldString.equals(newString) && !newString.trim().isEmpty();
+    }
+
+    private void checkCustomerIsPresentInDatabase(long id) {
+        if (!customerRepository.findById(id).isPresent())
+            throw new NotFoundInDatabaseException("Customer with id: " + id + " not found in database");
     }
 }

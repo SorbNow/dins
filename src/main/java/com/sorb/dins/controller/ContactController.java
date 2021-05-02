@@ -4,6 +4,7 @@ import com.sorb.dins.exception.NotFoundInDatabaseException;
 import com.sorb.dins.model.Contact;
 import com.sorb.dins.service.ContactService;
 import com.sorb.dins.service.CustomerService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -26,7 +27,6 @@ public class ContactController {
      * Autowired {@link ContactService}
      */
     private final ContactService contactService;
-
     private final CustomerService customerService;
 
     public ContactController(ContactService contactService, CustomerService customerService) {

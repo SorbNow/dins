@@ -31,7 +31,7 @@ public class CustomerController {
 
 
     @GetMapping
-    public List<Customer> getCustomers(@NotBlank @RequestParam(required = false) String name,
+    public List<Customer> getCustomers(@RequestParam(required = false) String name,
                                        @RequestParam(defaultValue = "false", required = false) boolean isRequiresLike) {
         return name == null ? customerService.getAll() : customerService.findCustomerByName(name, isRequiresLike);
     }
