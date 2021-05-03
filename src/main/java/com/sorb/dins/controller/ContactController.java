@@ -42,7 +42,8 @@ public class ContactController {
     @GetMapping
     public List<Contact> getContactsByCustomerId(@Positive @RequestParam long customerId,
                                                  @RequestParam(required = false, defaultValue = "0") long phoneNumber) {
-        return phoneNumber == 0 ? contactService.getByCustomerId(customerId) : contactService.findContactByPhoneNumber(phoneNumber, customerId);
+        return phoneNumber == 0 ? contactService.getByCustomerId(customerId)
+                : contactService.findContactByPhoneNumber(phoneNumber, customerId);
     }
 
     @Operation(summary = "save contact to customer phone book")
@@ -50,12 +51,14 @@ public class ContactController {
             @ExampleObject(
                     name = "add contact JSON",
                     value =
-                            "{ \"firstName\" : \"string\", \"lastName\": \"string\", \"phoneNumber\":1, \"customer\": { \"id\":1} }")
+                            "{ \"firstName\" : \"string\", \"lastName\": \"string\"," +
+                                    " \"phoneNumber\":1, \"customer\": { \"id\":1} }")
     }))
     @PostMapping
     public Contact saveContact(@Valid @RequestBody Contact newContact) {
         if (customerService.getById(newContact.getCustomer().getId()) == null)
-            throw new NotFoundInDatabaseException("customer with id " + newContact.getCustomer().getId() + " not found in database");
+            throw new NotFoundInDatabaseException("customer with id " + newContact.getCustomer().getId()
+                    + " not found in database");
         return contactService.save(newContact);
     }
 

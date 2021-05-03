@@ -24,7 +24,8 @@ public interface ContactRepository extends JpaRepository<Contact, Long> {
     List<Contact> findContactsByCustomer_Id(Long id);
 
     /**
-     * method for finding all {@link Contact} with {@link Contact#phoneNumber} for each {@link com.sorb.dins.model.Customer}
+     * method for finding all {@link Contact} with {@link Contact#phoneNumber} for each
+     * {@link com.sorb.dins.model.Customer}
      *
      * @param id          - customer id from table {@link com.sorb.dins.model.Customer}
      * @param phoneNumber - required phone number

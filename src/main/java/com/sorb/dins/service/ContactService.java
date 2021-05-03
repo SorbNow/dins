@@ -15,6 +15,7 @@ public interface ContactService {
 
     /**
      * method for saving {@link Contact} object
+     *
      * @param contact - {@link Contact} object which needs to be saved
      * @return saved object from database
      */
@@ -22,6 +23,7 @@ public interface ContactService {
 
     /**
      * search method for {@link Contact} object
+     *
      * @param id - {@link Contact#id} which needs to be found
      * @return found contact from database
      */
@@ -29,12 +31,14 @@ public interface ContactService {
 
     /**
      * method for deleting {@link Contact} object
+     *
      * @param id - {@link Contact#id} which needs to be removed
      */
     void delete(long id);
 
     /**
      * search method for {@link Contact} object
+     *
      * @param customerId - {@link com.sorb.dins.model.Customer#id} by which need to find contacts
      * @return list with found contacts
      */
@@ -42,6 +46,7 @@ public interface ContactService {
 
     /**
      * method for updating {@link Contact}
+     *
      * @param oldContact - contact by which need to be updated
      * @param newContact - contact from which new fields will be taken
      * @return updated contact from database
@@ -51,9 +56,10 @@ public interface ContactService {
     /**
      * search method for {@link Contact} by {@link Contact#phoneNumber}
      * and {@link com.sorb.dins.model.Customer#id}
+     *
      * @param phoneNumber - phone number by which need to find contacts
-     * @param customerId - customer id whose contacts are being searched
-     * @return  contact from database
+     * @param customerId  - customer id whose contacts are being searched
+     * @return contact from database
      */
     List<Contact> findContactByPhoneNumber(long phoneNumber, long customerId);
 

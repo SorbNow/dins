@@ -28,8 +28,8 @@ public interface CustomerRepository extends JpaRepository<Customer, Long> {
     /**
      * method for searching all {@link Customer} by part of first and last name
      *
-     * @param name - customer first name from table {@link Customer}
-     * @param lastName  - customer last name from table {@link Customer}
+     * @param name     - customer first name from table {@link Customer}
+     * @param lastName - customer last name from table {@link Customer}
      * @return list of customers with given part of first and last name
      */
     List<Customer> findCustomersByLastNameIgnoreCaseContainsOrFirstNameIgnoreCaseContains(String name, String lastName);

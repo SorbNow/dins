@@ -32,7 +32,8 @@ public class CustomerController {
         this.customerService = customerService;
     }
 
-    @Operation(summary = "get customer list by full/part of first and last name. If parameters empty-return all customers")
+    @Operation(summary = "get customer list by full/part of first and last name. " +
+            "If parameters empty-return all customers")
     @GetMapping
     public List<Customer> getCustomers(@Parameter(description = "first or last name of sought customer")
                                        @RequestParam(required = false) String name,
@@ -55,7 +56,8 @@ public class CustomerController {
 
     @Operation(summary = "get customer from database by id")
     @GetMapping("/{id}")
-    public Customer getCustomerById(@Parameter(description = "id of customer which should be searched") @Positive @PathVariable long id) {
+    public Customer getCustomerById(@Parameter(description = "id of customer which should be searched")
+                                    @Positive @PathVariable long id) {
         return customerService.getById(id);
     }
 

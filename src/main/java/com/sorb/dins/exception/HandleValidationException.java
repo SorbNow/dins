@@ -10,7 +10,10 @@ import org.springframework.web.HttpMediaTypeNotSupportedException;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.MissingServletRequestParameterException;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.ControllerAdvice;
+import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
@@ -89,7 +92,9 @@ public class HandleValidationException extends ResponseEntityExceptionHandler {
 
     //custom exception @RequestBody is missing
     @Override
-    protected ResponseEntity<Object> handleHttpMessageNotReadable(HttpMessageNotReadableException ex, HttpHeaders headers, HttpStatus status, WebRequest request) {
+    protected ResponseEntity<Object> handleHttpMessageNotReadable(HttpMessageNotReadableException ex,
+                                                                  HttpHeaders headers, HttpStatus status,
+                                                                  WebRequest request) {
         String message = "Malformed JSON request. Please, check your request body";
 
         ApiError apiError =
@@ -127,7 +132,9 @@ public class HandleValidationException extends ResponseEntityExceptionHandler {
 
     //custom exception if method not supported
     @Override
-    protected ResponseEntity<Object> handleHttpRequestMethodNotSupported(HttpRequestMethodNotSupportedException ex, HttpHeaders headers, HttpStatus status, WebRequest request) {
+    protected ResponseEntity<Object> handleHttpRequestMethodNotSupported(HttpRequestMethodNotSupportedException ex,
+                                                                         HttpHeaders headers, HttpStatus status,
+                                                                         WebRequest request) {
         String error =
                 ex.getMessage() + " for url. Supported methods: " + ex.getSupportedHttpMethods();
 
@@ -139,7 +146,9 @@ public class HandleValidationException extends ResponseEntityExceptionHandler {
 
     //custom exception if media type is wrong
     @Override
-    protected ResponseEntity<Object> handleHttpMediaTypeNotSupported(HttpMediaTypeNotSupportedException ex, HttpHeaders headers, HttpStatus status, WebRequest request) {
+    protected ResponseEntity<Object> handleHttpMediaTypeNotSupported(HttpMediaTypeNotSupportedException ex,
+                                                                     HttpHeaders headers, HttpStatus status,
+                                                                     WebRequest request) {
         String error =
                 ex.getContentType().toString() + " not supported. Please, use JSON media type";
 
@@ -150,7 +159,7 @@ public class HandleValidationException extends ResponseEntityExceptionHandler {
     }
 
     //custom exception for other errors
-    @ExceptionHandler({ Exception.class })
+    @ExceptionHandler({Exception.class})
     public ResponseEntity<Object> handleAll(
             Exception ex,
             WebRequest request) {

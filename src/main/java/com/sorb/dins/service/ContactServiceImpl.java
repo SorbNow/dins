@@ -20,8 +20,8 @@ public class ContactServiceImpl implements ContactService {
     @Override
     public Contact save(Contact contact) {
         if (contact.getId() != 0 && contactRepository.findById(contact.getId()).isPresent())
-            throw new ExistsInDatabaseException("Contact with id: " + contact.getId() + " already exists in database." +
-                    " For update use PUT ");
+            throw new ExistsInDatabaseException("Contact with id: " + contact.getId() +
+                    " already exists in database." + " For update use PUT ");
 
         return contactRepository.save(contact);
     }
@@ -43,7 +43,8 @@ public class ContactServiceImpl implements ContactService {
         List<Contact> contactList = contactRepository.findContactsByCustomer_Id(customerId);
 
         if (contactList.isEmpty())
-            throw new NotFoundInDatabaseException("Contacts with customer id: " + customerId + " not found in database");
+            throw new NotFoundInDatabaseException("Contacts with customer id: " + customerId +
+                    " not found in database");
 
         return contactList;
     }
@@ -57,7 +58,8 @@ public class ContactServiceImpl implements ContactService {
         if (isRequiresUpdate(oldContact.getLastName(), newContact.getLastName()))
             oldContact.setLastName(newContact.getLastName());
 
-        if (newContact.getPhoneNumber()>0 && newContact.getPhoneNumber() != 0 && oldContact.getPhoneNumber() != newContact.getPhoneNumber())
+        if (newContact.getPhoneNumber() > 0 && newContact.getPhoneNumber() != 0
+                && oldContact.getPhoneNumber() != newContact.getPhoneNumber())
             oldContact.setPhoneNumber(newContact.getPhoneNumber());
 
         return contactRepository.save(oldContact);
@@ -76,7 +78,7 @@ public class ContactServiceImpl implements ContactService {
     }
 
     private boolean isRequiresUpdate(String oldString, String newString) {
-        return newString!=null && !oldString.equals(newString) && !newString.trim().isEmpty();
+        return newString != null && !oldString.equals(newString) && !newString.trim().isEmpty();
     }
 
     public void deleteRelatedContacts(long customerId) {

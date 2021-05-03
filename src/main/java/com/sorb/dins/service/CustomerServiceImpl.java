@@ -46,8 +46,8 @@ public class CustomerServiceImpl implements CustomerService {
     @Override
     public Customer save(Customer customer) {
         if (customer.getId() != 0 && customerRepository.findById(customer.getId()).isPresent())
-            throw new ExistsInDatabaseException("Customer with id: " + customer.getId() + " already exists in database." +
-                    " For update use PUT ");
+            throw new ExistsInDatabaseException("Customer with id: " + customer.getId()
+                    + " already exists in database." + " For update use PUT ");
         return customerRepository.save(customer);
     }
 
@@ -64,7 +64,8 @@ public class CustomerServiceImpl implements CustomerService {
 
     @Override
     public List<Customer> findCustomerByName(String name, boolean isRequiresLike) {
-        List<Customer> customerList = isRequiresLike ? customerRepository.findCustomersByLastNameIgnoreCaseContainsOrFirstNameIgnoreCaseContains(name, name)
+        List<Customer> customerList = isRequiresLike
+                ? customerRepository.findCustomersByLastNameIgnoreCaseContainsOrFirstNameIgnoreCaseContains(name, name)
                 : customerRepository.findCustomersByLastNameIgnoreCaseOrFirstNameIgnoreCase(name, name);
 
         if (customerList.isEmpty())
@@ -74,7 +75,7 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     private boolean isRequiresUpdate(String oldString, String newString) {
-        return newString!=null && !oldString.equals(newString) && !newString.trim().isEmpty();
+        return newString != null && !oldString.equals(newString) && !newString.trim().isEmpty();
     }
 
     private void checkCustomerIsPresentInDatabase(long id) {
