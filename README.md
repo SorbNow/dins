@@ -4,23 +4,32 @@
 ContactController
 
 GET
-/contacts
+/contacts - get contacts list by customer id. If phone number not empty - find contact with number in customer phone book
 
 
 POST
-/contacts
+/contacts - save contact to customer phone book
 
+Example Request body:
+
+{
+
+    "firstName" : "Alice",
+    "lastName" : "Madness",
+    "phoneNumber":13772,
+    "customer" : {"id":1}
+}
 
 GET
-/contacts/{id}
+/contacts/{id} - get contact from database by id
 
 
 PUT
-/contacts/{id}
+/contacts/{id} - edit contact from database by id
 
 
 DELETE
-/contacts/{id}
+/contacts/{id} - delete contact from database by id
 
 
 
@@ -29,32 +38,29 @@ DELETE
 CustomerController
 
 GET
-/customers
+/customers - get customer list by full/part of first and last name. If parameters empty-return all customers
 
 
 POST
-/customers
+/customers - save customer to database
 
 Example Request body:
 
 {
-  
+
     "firstName" : "Alice",
-    "lastName" : "Madness",
-    "phoneNumber":13772,
-    "customer" : {"id":1}
+    "lastName" : "Madness"
 }
 
+GET
+/customers/{id} - get customer from database by id
+
 PUT
-/customers/{id}
+/customers/{id} - edit customer in database
 
 
 DELETE
-/customers/{id}
-
-
-GET
-/customers/{id}
+/customers/{id} - delete customer from database
 
 
 
