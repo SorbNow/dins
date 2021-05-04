@@ -71,4 +71,4 @@ http://localhost:8080/swagger.html
 
 start program command:
 
-java -jar dins-0.0.1-SNAPSHOT.jar
+java -jar dins-0.0.2-SNAPSHOT.jar
