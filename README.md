@@ -15,7 +15,7 @@ Example Request body:
 {
 
     "firstName" : "Alice",
-    "lastName" : "Madness",
+    "lastName" : "Simple",
     "phoneNumber":13772,
     "customer" : {"id":1}
 }
@@ -49,7 +49,7 @@ Example Request body:
 {
 
     "firstName" : "Alice",
-    "lastName" : "Madness"
+    "lastName" : "Simple"
 }
 
 GET
