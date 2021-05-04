@@ -1,5 +1,5 @@
 
-Реализованные запросы:
+implemented requests:
 
 ContactController
 
